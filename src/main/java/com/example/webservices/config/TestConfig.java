@@ -1,14 +1,8 @@
 package com.example.webservices.config;
 
-import com.example.webservices.entities.Category;
-import com.example.webservices.entities.Order;
-import com.example.webservices.entities.Product;
-import com.example.webservices.entities.User;
+import com.example.webservices.entities.*;
 import com.example.webservices.entities.enums.OrderStatus;
-import com.example.webservices.repositories.CategoryRepository;
-import com.example.webservices.repositories.OrderRepository;
-import com.example.webservices.repositories.ProductRepository;
-import com.example.webservices.repositories.UserRepository;
+import com.example.webservices.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +22,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -55,11 +51,16 @@ public class TestConfig implements CommandLineRunner {
         p4.getCategories().add(cat3);
         p5.getCategories().add(cat2);
 
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
 
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
         categoryRepository.saveAll((Arrays.asList(cat1,cat2,cat3)));
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
     }
 }
